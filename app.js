@@ -1,3 +1,4 @@
+
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -24,3 +25,6 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
   console.log("Server is running. Use our API on port: 3000");
 });
+
+
+
