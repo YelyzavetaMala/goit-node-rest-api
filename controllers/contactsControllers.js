@@ -15,7 +15,7 @@ export const getAllContacts = (req, res) => {
 };
 
 export const getOneContact = (req, res) => {
-  getContactById(req.params.id)
+  getContactById(req.params.id, "../db/contacts.json")
     .then((contact) => {
       if (contact) {
         res.status(200).json(contact);
@@ -29,7 +29,7 @@ export const getOneContact = (req, res) => {
 };
 
 export const deleteContact = (req, res) => {
-  removeContact(req.params.id)
+  removeContact(req.params.id, "../db/contacts.json")
     .then((contact) => {
       if (contact) {
         res.status(200).json(contact);
@@ -42,9 +42,12 @@ export const deleteContact = (req, res) => {
 
 export const createContact = (req, res) => {
   const { name, email, phone } = req.body;
-  const { error } = createContactSchema.validate(contact, {
-    abortEarly: false,
-  });
+  const { error } = createContactSchema.validate(
+    { name, email, phone },
+    {
+      abortEarly: false,
+    }
+  );
 
   if (error) {
     return res
@@ -52,10 +55,11 @@ export const createContact = (req, res) => {
       .json(error.details.map((error) => error.message).join(", "));
   }
 
-  addContact(req.body)
+  addContact(req.body, "../db/contacts.json")
     .then((newContact) => res.status(201).json(newContact))
     .catch((error) => {
       console.error("Error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     });
 };
 
@@ -74,7 +78,7 @@ export const updateContact = (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 
-  updateData(id, updatedData)
+  updateContact(id, updatedData, "../db/contacts.json")
     .then((updatedContact) => {
       if (updatedContact) {
         res.status(200).json(updatedContact);
@@ -84,5 +88,6 @@ export const updateContact = (req, res) => {
     })
     .catch((error) => {
       console.error("Error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
     });
 };
