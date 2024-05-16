@@ -44,12 +44,9 @@ export const deleteContact = (req, res) => {
 
 export const createContact = (req, res) => {
   const { name, email, phone } = req.body;
-  const { error } = createContactSchema.validate(
-    { name, email, phone },
-    {
-      abortEarly: false,
-    }
-  );
+  const { error } = createContactSchema.validate(req.body, {
+    abortEarly: false,
+  });
 
   if (error) {
     return res
@@ -57,7 +54,7 @@ export const createContact = (req, res) => {
       .json(error.details.map((error) => error.message).join(", "));
   }
 
-  addContact(req.body)
+  addContact(name, email, phone)
     .then((newContact) => res.status(201).json(newContact))
     .catch((error) => {
       console.error("Error:", error);
