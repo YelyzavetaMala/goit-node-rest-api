@@ -51,7 +51,9 @@ export const createContact = (req, res) => {
   if (error) {
     return res
       .status(400)
-      .json(error.details.map((error) => error.message).join(", "));
+      .json({
+        message: error.details.map((error) => error.message).join(", "),
+      });
   }
 
   addContact(name, email, phone)
