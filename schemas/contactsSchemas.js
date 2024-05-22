@@ -11,3 +11,22 @@ export const updateContactSchema = Joi.object({
   email: Joi.string().email(),
   phone: Joi.string().min(8),
 });
+
+const contactsSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "Set name for contact"],
+  },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+export const Contact = mongoose.model("Contact", contactsSchema);
