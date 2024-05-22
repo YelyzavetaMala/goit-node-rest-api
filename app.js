@@ -1,7 +1,7 @@
-
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import mongoose from "mongoose";
 
 import contactsRouter from "./routes/contactsRouter.js";
 
@@ -22,9 +22,14 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running. Use our API on port: 3000");
-});
+const DB_URI = process.env.DB_URI;
 
+mongoose.set("strictQuery", true);
 
-
+mongoose
+  .connect(DB_URI)
+  .then(() => console.log("Database connection successful"))
+  .catch((error) => {
+    console.error("Database connection error:", error);
+    process.exit(1);
+  });
