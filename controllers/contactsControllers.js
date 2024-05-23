@@ -4,7 +4,7 @@ import {
   updateContactSchema,
 } from "../schemas/contactsSchemas.js";
 
-export const getAllContacts = async (req, res) => {
+const getAllContacts = async (req, res) => {
   try {
     const contacts = await Contact.find();
     res.status(200).json(contacts);
@@ -14,7 +14,7 @@ export const getAllContacts = async (req, res) => {
   }
 };
 
-export const getOneContact = async (req, res) => {
+const getOneContact = async (req, res) => {
   try {
     const contact = await Contact.findById(req.params.id);
     if (contact) {
@@ -28,7 +28,7 @@ export const getOneContact = async (req, res) => {
   }
 };
 
-export const createContact = async (req, res) => {
+const createContact = async (req, res) => {
   const { error } = createContactSchema.validate(req.body, {
     abortEarly: false,
   });
@@ -48,7 +48,7 @@ export const createContact = async (req, res) => {
   }
 };
 
-export const deleteContact = async (req, res) => {
+const deleteContact = async (req, res) => {
   try {
     const contact = await Contact.findByIdAndDelete(req.params.id);
     if (contact) {
@@ -62,7 +62,7 @@ export const deleteContact = async (req, res) => {
   }
 };
 
-export const updateContact = async (req, res) => {
+const updateContact = async (req, res) => {
   const { error } = updateContactSchema.validate(req.body);
   if (error) {
     return res.status(400).json({ message: error.message });
