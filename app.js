@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
+import "dotenv/config";
 
 import contactsRouter from "./routes/contactsRouter.js";
 
@@ -22,7 +23,7 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message });
 });
 
-const DB_URI = process.env.DB_URI;
+const DB_URI = process.env.URI;
 
 mongoose.set("strictQuery", true);
 

@@ -1,4 +1,5 @@
 import Joi from "joi";
+import mongoose from "mongoose";
 
 export const createContactSchema = Joi.object({
   name: Joi.string().required().min(3),
